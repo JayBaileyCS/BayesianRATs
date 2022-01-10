@@ -94,6 +94,13 @@
           document.getElementById("calculationText").innerHTML = html;
         }
 
+        const roundCalculation = (calculation) => {
+          console.log(calculation)
+          roundTo = (calculation < 10 || calculation > 98) ? 1 : 0
+          console.log(roundTo)
+          return calculation.toFixed(roundTo);
+        }
+
         const getCalculation = () => {
 
           let specificity = document.getElementById("specificity").value;
@@ -123,15 +130,15 @@
           let positive_chance = true_positive / (true_positive + false_negative) * 100
           let negative_chance = false_positive / (false_positive + true_negative) * 100
 
-          positive_text = `If you test positive for COVID-19, the chance you actually have it is ${positive_chance.toFixed(2)}%.`
-          negative_text = `If you test negative for COVID-19, the chance you actually have it is ${negative_chance.toFixed(2)}%.`
+          positive_text = `If you test positive for COVID-19, the chance you actually have it is ${roundCalculation(positive_chance)}%.`
+          negative_text = `If you test negative for COVID-19, the chance you actually have it is ${roundCalculation(negative_chance)}%.`
 
           details_header = `Details:`
 
-          tp_text = `True Positive: The chance you have COVID-19 and test positive is ${(true_positive * 100).toFixed(2)}%.`
-          fp_text = `False Positive: The chance you have COVID-19 but test negative is ${(false_positive * 100).toFixed(2)}%.`
-          tn_text = `True Negative: The chance you don't have COVID-19 and test negative is ${(true_negative * 100).toFixed(2)}%.`
-          fn_text = `False Negative: The chance you don't have COVID-19 but test positive is ${(false_negative * 100).toFixed(2)}%.`
+          tp_text = `True Positive: The chance you have COVID-19 and test positive is ${roundCalculation(true_positive * 100)}%.`
+          fp_text = `False Positive: The chance you have COVID-19 but test negative is ${roundCalculation(false_positive * 100)}%.`
+          tn_text = `True Negative: The chance you don't have COVID-19 and test negative is ${roundCalculation(true_negative * 100)}%.`
+          fn_text = `False Negative: The chance you don't have COVID-19 but test positive is ${roundCalculation(false_negative * 100)}%.`
 
           text_html = `${positive_text}<br>${negative_text}<br><br>${details_header}<br><br>${tp_text}<br>${fp_text}<br>${tn_text}<br>${fn_text}`
   
