@@ -1,13 +1,16 @@
 <!DOCTYPE html>
+<meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate" />
+<meta http-equiv="Pragma" content="no-cache" />
+<meta http-equiv="Expires" content="0" />
 <html>
   <head>
     <style>
       table {
         font-family: arial, sans-serif;
-        font-size: 24px;
         border-collapse: collapse;
-        width: 80%;
+        width: 400px;
       }
+
       td,
       th {
         border: 1px solid #dddddd;
@@ -17,21 +20,6 @@
 
       tr:nth-child(even) {
         background-color: #dddddd;
-      }
-      button {
-        background-color: #4CAF50;
-        border: none;
-        color: white;
-        padding: 15px 32px;
-        text-align: center;
-        text-decoration: none;
-        display: inline-block;
-        font-size: 24px;
-        margin: 4px 2px;
-        cursor: pointer;
-      }
-      input {
-        font-size: 24px;
       }
     </style>
   </head>
@@ -46,7 +34,7 @@
 
     <p>
       <b>Sensitivity</b> is how likely a test is to return a negative result if
-      you don't have COVID. By default, this is set to 98%, the minimum required
+      you do not have COVID. By default, this is set to 98%, the minimum required
       for an RAT to be sold.
     </p>
 
@@ -84,36 +72,14 @@
         </td>
       </tr>
     </table>
-    <button onclick=createParagraph()>Calculate</button>
+    <button onclick=getCalculation()>Calculate</button>
     <p id=calculationText></p>
 
     <script>
-
-        const createParagraph = () => {
-          const html = getCalculation();
-          document.getElementById("calculationText").innerHTML = html;
-        }
-
         const getCalculation = () => {
-
-          let specificity = document.getElementById("specificity").value;
-          let sensitivity = document.getElementById("sensitivity").value;
-          let probability = document.getElementById("probability").value;
-
-          let inputList = new Array(specificity, sensitivity, probability);
-
-          for (const element of inputList) {
-            if (isNaN(element)) {
-              return `All inputs must be numbers.`
-            }
-            if (element <= 0 || element > 100) {
-              return `All inputs must be between 0 and 100. Probability cannot be 0.`
-            }
-          }
-
-          specificity = specificity / 100;
-          sensitivity = sensitivity / 100;
-          probability = probability / 100;
+          let specificity = Number(document.getElementById("specificity").value) / 100;
+          let sensitivity = Number(document.getElementById("sensitivity").value) / 100;
+          let probability = Number(document.getElementById("probability").value) / 100;
   
           let true_positive = specificity * probability
           let false_positive = (1 - specificity) * probability
@@ -135,7 +101,7 @@
 
           text_html = `${positive_text}<br>${negative_text}<br><br>${details_header}<br><br>${tp_text}<br>${fp_text}<br>${tn_text}<br>${fn_text}`
   
-          return text_html;
+          document.getElementById("calculationText").innerHTML = text_html;
         }
     </script>
   </body>
